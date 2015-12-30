@@ -17,7 +17,7 @@ local function is_ok(ip, forwarded_for)
 		return false
 	end
 
-	local res, err = red:auth("freshfresh_game")
+	local res, err = red:auth("test")
 	if not res then
 		log("failed to authenticate: ", err)
 		return false
@@ -25,10 +25,10 @@ local function is_ok(ip, forwarded_for)
 
 	local key = "ip:"..ip
 	local ip_result, _ = red: incr(key)
-	if ip_result<5 then
-		local res, err = red:expire(key, 10)
+	if ip_result=1 then
+		local res, err = red:expire(key, 3600)
 	end
-	if ip_result<10 then
+	if ip_result<100 then
 		return true
 	end
 	return false
